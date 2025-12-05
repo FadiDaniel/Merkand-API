@@ -1,0 +1,1 @@
+- Datos de prueba provenientes de "Grocery Products Dataset": https://www.kaggle.com/datasets/computingvictor/mercadoan-inventory?resource=download
