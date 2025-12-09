@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.ArrayList;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "suppliers")
@@ -24,8 +24,8 @@ public class Supplier {
     private boolean active;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-    private List<Product> products = new ArrayList<>();
+    private List<Product> productList = new ArrayList<>();
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orderList = new ArrayList<>();
 
 }

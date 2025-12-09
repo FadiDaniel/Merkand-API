@@ -2,14 +2,14 @@ package com.merkand.api.entity;
 
 import com.merkand.api.entity.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "orders")
@@ -20,8 +20,13 @@ public class Order {
     private double totalAmount;
     private LocalDate orderDate;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status; // "PENDING", "COMPLETED", "CANCELLED"
+
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private ArrayList<OrderItem> orderItemList = new ArrayList<OrderItem>();
+
 }

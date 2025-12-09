@@ -1,14 +1,14 @@
 package com.merkand.api.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "products")
@@ -21,12 +21,13 @@ public class Product {
     private int stock;
     private boolean active;
     private LocalDate createdAt;
+
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private ArrayList<Product> productCategories = new ArrayList<Product>();
+    private ArrayList<OrderItem> orderItemList = new ArrayList<OrderItem>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private ArrayList<StockMovement> stockMovementList = new ArrayList<StockMovement>();
 }
