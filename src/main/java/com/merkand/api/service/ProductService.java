@@ -4,11 +4,8 @@ import com.merkand.api.entity.Product;
 
 import java.util.ArrayList;
 
-public interface ProductService {
-    Product get(Long productId);
-    ArrayList<Product> getAll();
-    void save(Product product);
-    void delete(Long productId);
+public interface ProductService extends CurdService<Product> {
+
     ArrayList<Product> getActiveProducts();
     ArrayList<Product> getByNamePattern(String name);
 }
