@@ -23,16 +23,22 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${app.jwt.secret:ChangeThisJWTSecretKeyChangeThisJWTSecretKey}")
+    @Value("${token.signing.key}")
     private String secret;
 
-    @Value("${app.jwt.expiration-ms:3600000}") // 1h
+    @Value("${token.signing.expiration-ms}")
     private long validityInMilliseconds;
 
     private Key key;
 
     @PostConstruct
     public void init() {
+        if (secret == null || secret.isBlank()) {
+            throw new IllegalStateException("Propertie'token.signing.key' is not set");
+        }
+        if (secret.getBytes(StandardCharsets.UTF_8).length < 32) {
+            throw new IllegalStateException("token.signing.key must have at least 32 bytes for HS256");
+        }
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
