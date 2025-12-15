@@ -2,9 +2,9 @@ package com.merkand.api.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,17 +17,21 @@ public class Product {
     private Long id;
     private String name;
     private String description;
+    private String category;
     private double price;
     private int stock;
+    private int minimumStock;
     private boolean active;
     private LocalDate createdAt;
+    private LocalDate updatedAt;
+
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private ArrayList<OrderItem> orderItemList = new ArrayList<OrderItem>();
+    private List<OrderItem> orderItemList;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private ArrayList<StockMovement> stockMovementList = new ArrayList<StockMovement>();
+    private List<StockMovement> stockMovementList;
 }

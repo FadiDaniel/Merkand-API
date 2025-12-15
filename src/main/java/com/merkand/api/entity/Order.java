@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +28,6 @@ public class Order {
     private Supplier supplier;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private ArrayList<OrderItem> orderItemList = new ArrayList<OrderItem>();
+    private List<OrderItem> orderItemList;
 
 }

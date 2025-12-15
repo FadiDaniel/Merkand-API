@@ -24,8 +24,8 @@ public class Supplier {
     private boolean active;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-    private List<Product> productList = new ArrayList<>();
+    private List<Product> productList;
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-    private List<Order> orderList = new ArrayList<>();
+    private List<Order> orderList;
 
 }
