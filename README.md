@@ -6,6 +6,7 @@
 - Dataset Licence: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">creative commons</a>
 
 <div align="center">
-  <h2>ERM PostgreSQL v1.1 </h2>
-  <img width="731"  alt="ERM-DB" src="https://github.com/user-attachments/assets/655e8b0f-05a5-4a10-bd2a-60c9b32a0cd4" />
+  <h2>ERM PostgreSQL v1.2 </h2>
+  <img width="731"  alt="ERM-DB" src="https://github.com/user-attachments/assets/110e81fa-3fbc-46eb-812f-8e06b6806f57" />
+
 </div>
