@@ -16,7 +16,7 @@ public class OrderDto {
     private String status; // "PENDING", "RECEIVED", "CANCELLED"
     private String supplierName;
     private String supplierId;
-    private int orderItemListCount;
+    private int orderItemListCount; // ¿enviar la lista completa? evaluar
 
 
 }
