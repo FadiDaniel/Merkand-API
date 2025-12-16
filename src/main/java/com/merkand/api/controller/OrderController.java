@@ -1,7 +1,7 @@
 package com.merkand.api.controller;
 
-import com.merkand.api.dto.ProductDto;
-import com.merkand.api.service.implementation.ProductServImpl;
+import com.merkand.api.dto.OrderDto;
+import com.merkand.api.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,22 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/orders")
 @CrossOrigin(origins="http://localhost:4200")
-public class ProductController {
+public class OrderController {
     @Autowired
-    private ProductServImpl service;
+    private OrderService service;
     @Autowired
     private ModelMapper mapper;
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAllProducts(){
-        List<ProductDto> productsDto = service.getAll()
+    public ResponseEntity<List<OrderDto>> getAllOrders(){
+        List<OrderDto> ordersDto = service.getAll()
                 .stream()
-                .map(product -> mapper.map(product, ProductDto.class))
+                .map(order -> mapper.map(order, OrderDto.class))
                 .toList();
-        System.out.println(productsDto);
-        return ResponseEntity.ok(productsDto);
+        System.out.println(ordersDto);
+        return ResponseEntity.ok(ordersDto);
     }
-
 }

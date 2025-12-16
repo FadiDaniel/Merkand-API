@@ -21,13 +21,13 @@ public class Order {
     private double totalAmount;
     private LocalDate orderDate;
     @Enumerated(EnumType.STRING)
-    private Status status; // "PENDING", "COMPLETED", "CANCELLED"
+    private Status status; // "PENDING", "RECEIVED", "CANCELLED"
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItemList;
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
 }

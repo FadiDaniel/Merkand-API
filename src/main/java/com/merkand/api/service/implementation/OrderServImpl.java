@@ -23,7 +23,7 @@ public class OrderServImpl implements OrderService {
 
     @Override
     public ArrayList<Order> getAll() {
-        return (ArrayList<Order>) repo.findAll();
+        return (ArrayList<Order>) repo.findAllWithItems();
     }
 
     @Override
