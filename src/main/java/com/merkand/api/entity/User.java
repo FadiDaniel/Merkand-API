@@ -1,5 +1,6 @@
 package com.merkand.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.merkand.api.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,6 +20,7 @@ public class User {
     private String username;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)
