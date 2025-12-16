@@ -14,16 +14,16 @@ public class MapperConfig {
         ModelMapper mapper = new ModelMapper();
 
         // Mapping config Oreder -> OrderDto
-        mapper.addMappings(new PropertyMap<Order, OrderDto>() {
-            @Override
-            protected void configure() {
-                map().setOrderItemListCount(source.getOrderItemList().size());
-                map(source.getSupplier().getName()).setSupplierName(null);
-                map(source.getSupplier().getId()).setSupplierId(null);
-            }
-        });
+//        mapper.addMappings(new PropertyMap<Order, OrderDto>() {
+//            @Override
+//            protected void configure() {
+//                map().setOrderItemListCount(source.getOrderItemList().size());
+//                map(source.getSupplier().getName()).setSupplierName(null);
+//                map(source.getSupplier().getId()).setSupplierId(null);
+//            }
+//        });
 
-        return new ModelMapper();
+        return mapper;
     }
 
 }
