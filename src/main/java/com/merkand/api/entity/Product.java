@@ -21,6 +21,8 @@ public class Product {
     private double price;
     private int stock;
     private int minimumStock;
+    private String unitSale;
+    private String unitMeasure;
     private boolean active;
     private LocalDate createdAt;
     private LocalDate updatedAt;

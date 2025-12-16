@@ -19,6 +19,8 @@ public class ProductDto {
     private int stock;
     private int minimumStock;
     private boolean active;
+    private String unitSale;
+    private String unitMeasure;
     private LocalDate createdAt;
     private LocalDate updatedAt;
     private Long supplierId;
