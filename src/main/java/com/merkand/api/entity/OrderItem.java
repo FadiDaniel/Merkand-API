@@ -10,6 +10,7 @@ import lombok.*;
 @Table(name = "order_items")
 public class OrderItem {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
     private int quantity;
     private double unitPrice;

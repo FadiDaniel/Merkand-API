@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "stock_movements")
 public class StockMovement {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int quantity;
     @Enumerated(EnumType.STRING)
