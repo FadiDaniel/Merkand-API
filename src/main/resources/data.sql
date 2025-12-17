@@ -1,20 +1,17 @@
--- Script de población de base de datos para sistema de inventario
--- Solo inserta registros si no existen previamente
-
 BEGIN;
 
 -- ============================================
 -- TABLA: SUPPLIERS (Proveedores)
 -- ============================================
-INSERT INTO public.suppliers (id, active, name, contact_name, phone, email, address)
+INSERT INTO public.suppliers (id, active, name, contact_name, phone, email, address, nif)
 SELECT * FROM (VALUES
-                   (1, TRUE, 'Distribuidora Láctea del Sur', 'Ana Gómez', '555-1234', 'contacto@lacteasur.com', 'Calle Mayor 10, Madrid'),
-                   (2, TRUE, 'Carnes Premium S.A.', 'Roberto Funes', '555-5678', 'ventas@carnepremium.com', 'Av. Central 50, Barcelona'),
-                   (3, TRUE, 'Alimentos Frescos Hnos.', 'Carlos Ruiz', '555-9012', 'pedidos@frescoshnos.com', 'Polígono Industrial 3, Valencia'),
-                   (4, TRUE, 'Bebidas Mundiales Ltda.', 'Marta Vidal', '555-3456', 'info@bebidasmundiales.com', 'Ronda Exterior 25, Sevilla'),
-                   (5, TRUE, 'Fitosanitarios y Limpieza S.L.', 'Elena Soto', '555-7788', 'contacto@limpiezas.es', 'Polígono Calle C, Bilbao'),
-                   (6, TRUE, 'Productos Congelados Rápidos', 'Javier Cano', '555-2020', 'ventas@congeladosrapidos.net', 'Av. del Puerto 15, Cádiz')
-              ) AS new_suppliers(id, active, name, contact_name, phone, email, address)
+                   (1, TRUE, 'Distribuidora Láctea del Sur', 'Ana Gómez', '555-1234', 'contacto@lacteasur.com', 'Calle Mayor 10, Madrid', 'B12345678'),
+                   (2, TRUE, 'Carnes Premium S.A.', 'Roberto Funes', '555-5678', 'ventas@carnepremium.com', 'Av. Central 50, Barcelona', 'B87654321'),
+                   (3, TRUE, 'Alimentos Frescos Hnos.', 'Carlos Ruiz', '555-9012', 'pedidos@frescoshnos.com', 'Polígono Industrial 3, Valencia', 'B45678901'),
+                   (4, TRUE, 'Bebidas Mundiales Ltda.', 'Marta Vidal', '555-3456', 'info@bebidasmundiales.com', 'Ronda Exterior 25, Sevilla', 'B23456789'),
+                   (5, TRUE, 'Fitosanitarios y Limpieza S.L.', 'Elena Soto', '555-7788', 'contacto@limpiezas.es', 'Polígono Calle C, Bilbao', 'B34567890'),
+                   (6, TRUE, 'Productos Congelados Rápidos', 'Javier Cano', '555-2020', 'ventas@congeladosrapidos.net', 'Av. del Puerto 15, Cádiz', 'B56789012')
+              ) AS new_suppliers(id, active, name, contact_name, phone, email, address, nif)
 WHERE NOT EXISTS (
     SELECT 1 FROM public.suppliers WHERE suppliers.id = new_suppliers.id
 );
@@ -73,38 +70,23 @@ WHERE NOT EXISTS (
 -- ============================================
 INSERT INTO public.order_items (item_id, order_id, product_id, quantity, unit_price, sub_total)
 SELECT * FROM (VALUES
-                   -- Pedido 1 (Lácteos - 2024-10-10)
                    (1, 1, 1, 100, 1.00, 100.00),
                    (2, 1, 2, 30, 2.00, 60.00),
                    (3, 1, 10, 50, 0.50, 25.00),
-
-                   -- Pedido 2 (Carnes - 2024-11-01)
                    (4, 2, 3, 30, 8.50, 255.00),
                    (5, 2, 4, 14, 6.82, 95.50),
-
-                   -- Pedido 3 (Bebidas - 2024-11-05)
                    (6, 3, 7, 100, 3.00, 300.00),
                    (7, 3, 8, 20, 9.50, 190.00),
-
-                   -- Pedido 4 (Frescos - 2024-11-10)
                    (8, 4, 5, 80, 1.50, 120.00),
                    (9, 4, 6, 100, 0.85, 85.00),
                    (10, 4, 15, 35, 2.17, 75.95),
-
-                   -- Pedido 5 (Limpieza - 2024-11-15)
                    (11, 5, 11, 60, 6.00, 360.00),
                    (12, 5, 12, 80, 2.50, 200.00),
                    (13, 5, 20, 20, 4.52, 90.40),
-
-                   -- Pedido 6 (Congelados - 2024-11-20)
                    (14, 6, 13, 50, 3.50, 175.00),
                    (15, 6, 14, 45, 5.22, 235.25),
-
-                   -- Pedido 7 (Lácteos - 2024-12-05 - Pendiente)
                    (16, 7, 1, 150, 1.10, 165.00),
                    (17, 7, 17, 50, 3.30, 165.00),
-
-                   -- Pedido 8 (Carnes - 2024-12-12 - Pendiente)
                    (18, 8, 3, 40, 10.00, 400.00),
                    (19, 8, 18, 50, 3.60, 180.00)
               ) AS new_order_items(item_id, order_id, product_id, quantity, unit_price, sub_total)
@@ -113,54 +95,50 @@ WHERE NOT EXISTS (
 );
 
 -- ============================================
--- TABLA: STOCK_MOVEMENTS (Movimientos de Stock)
+-- TABLA: STOCK_MOVEMENTS
 -- ============================================
-INSERT INTO public.stock_movements (created_at, movement_type, quantity, reference, product_id, user_id)
+INSERT INTO public.stock_movements (id, date, movement_type, quantity, reference, product_id, user_id)
 SELECT * FROM (VALUES
-                   -- RECEPCIÓN DE PEDIDOS COMPLETADOS (IN)
-                   ('2024-10-11'::date, 'IN', 100, 'REC-P-001', 1, 2),
-                   ('2024-10-11'::date, 'IN', 30, 'REC-P-001', 2, 2),
-                   ('2024-10-11'::date, 'IN', 50, 'REC-P-001', 10, 2),
-                   ('2024-11-02'::date, 'IN', 30, 'REC-P-002', 3, 2),
-                   ('2024-11-02'::date, 'IN', 14, 'REC-P-002', 4, 2),
-                   ('2024-11-06'::date, 'IN', 100, 'REC-P-003', 7, 2),
-                   ('2024-11-06'::date, 'IN', 20, 'REC-P-003', 8, 2),
-                   ('2024-11-11'::date, 'IN', 80, 'REC-P-004', 5, 2),
-                   ('2024-11-11'::date, 'IN', 100, 'REC-P-004', 6, 2),
-                   ('2024-11-11'::date, 'IN', 35, 'REC-P-004', 15, 2),
-                   ('2024-11-16'::date, 'IN', 60, 'REC-P-005', 11, 2),
-                   ('2024-11-16'::date, 'IN', 80, 'REC-P-005', 12, 2),
-                   ('2024-11-16'::date, 'IN', 20, 'REC-P-005', 20, 2),
-                   ('2024-11-21'::date, 'IN', 50, 'REC-P-006', 13, 2),
-                   ('2024-11-21'::date, 'IN', 45, 'REC-P-006', 14, 2),
-
-                   -- AJUSTES Y SALIDAS DE INVENTARIO (OUT)
-                   ('2024-10-20'::date, 'OUT', 5, 'AJ-CADUCIDAD', 1, 1),
-                   ('2024-10-25'::date, 'OUT', 2, 'AJ-PERDIDA', 6, 2),
-                   ('2024-11-05'::date, 'OUT', 1, 'AJ-MERMA', 4, 2),
-                   ('2024-11-12'::date, 'OUT', 10, 'AJ-INVENTARIO', 5, 1),
-                   ('2024-11-18'::date, 'OUT', 5, 'AJ-CADUCIDAD', 2, 1),
-                   ('2024-11-25'::date, 'OUT', 20, 'AJ-DONACION', 7, 1),
-                   ('2024-11-25'::date, 'OUT', 3, 'AJ-ROBO', 3, 2),
-                   ('2024-12-01'::date, 'OUT', 6, 'AJ-MERMA', 15, 2),
-                   ('2024-12-10'::date, 'OUT', 10, 'AJ-ROTURA', 12, 1)
-              ) AS new_movements(created_at, movement_type, quantity, reference, product_id, user_id)
+                   (1, '2024-10-11'::timestamp, 'IN', 100, 'REC-P-001', 1, 2),
+                   (2, '2024-10-11'::timestamp, 'IN', 30, 'REC-P-001', 2, 2),
+                   (3, '2024-10-11'::timestamp, 'IN', 50, 'REC-P-001', 10, 2),
+                   (4, '2024-11-02'::timestamp, 'IN', 30, 'REC-P-002', 3, 2),
+                   (5, '2024-11-02'::timestamp, 'IN', 14, 'REC-P-002', 4, 2),
+                   (6, '2024-11-06'::timestamp, 'IN', 100, 'REC-P-003', 7, 2),
+                   (7, '2024-11-06'::timestamp, 'IN', 20, 'REC-P-003', 8, 2),
+                   (8, '2024-11-11'::timestamp, 'IN', 80, 'REC-P-004', 5, 2),
+                   (9, '2024-11-11'::timestamp, 'IN', 100, 'REC-P-004', 6, 2),
+                   (10, '2024-11-11'::timestamp, 'IN', 35, 'REC-P-004', 15, 2),
+                   (11, '2024-11-16'::timestamp, 'IN', 60, 'REC-P-005', 11, 2),
+                   (12, '2024-11-16'::timestamp, 'IN', 80, 'REC-P-005', 12, 2),
+                   (13, '2024-11-16'::timestamp, 'IN', 20, 'REC-P-005', 20, 2),
+                   (14, '2024-11-21'::timestamp, 'IN', 50, 'REC-P-006', 13, 2),
+                   (15, '2024-11-21'::timestamp, 'IN', 45, 'REC-P-006', 14, 2),
+                   (16, '2024-10-20'::timestamp, 'OUT', 5, 'AJ-CADUCIDAD', 1, 1),
+                   (17, '2024-10-25'::timestamp, 'OUT', 2, 'AJ-PERDIDA', 6, 2),
+                   (18, '2024-11-05'::timestamp, 'OUT', 1, 'AJ-MERMA', 4, 2),
+                   (19, '2024-11-12'::timestamp, 'OUT', 10, 'AJ-INVENTARIO', 5, 1),
+                   (20, '2024-11-18'::timestamp, 'OUT', 5, 'AJ-CADUCIDAD', 2, 1),
+                   (21, '2024-11-25'::timestamp, 'OUT', 20, 'AJ-DONACION', 7, 1),
+                   (22, '2024-11-25'::timestamp, 'OUT', 3, 'AJ-ROBO', 3, 2),
+                   (23, '2024-12-01'::timestamp, 'OUT', 6, 'AJ-MERMA', 15, 2),
+                   (24, '2024-12-10'::timestamp, 'OUT', 10, 'AJ-ROTURA', 12, 1)
+              ) AS new_movements(id, date, movement_type, quantity, reference, product_id, user_id)
 WHERE NOT EXISTS (
-    SELECT 1 FROM public.stock_movements
-    WHERE stock_movements.reference = new_movements.reference
-      AND stock_movements.product_id = new_movements.product_id
-      AND stock_movements.created_at = new_movements.created_at
+    SELECT 1 FROM public.stock_movements WHERE stock_movements.id = new_movements.id
 );
+
+-- REINICIO DE SECUENCIAS (Importante tras insertar IDs manuales)
+SELECT setval(pg_get_serial_sequence('public.suppliers', 'id'), coalesce(max(id), 1)) FROM public.suppliers;
+SELECT setval(pg_get_serial_sequence('public.products', 'id'), coalesce(max(id), 1)) FROM public.products;
+SELECT setval(pg_get_serial_sequence('public.orders', 'id'), coalesce(max(id), 1)) FROM public.orders;
+SELECT setval(pg_get_serial_sequence('public.order_items', 'item_id'), coalesce(max(item_id), 1)) FROM public.order_items;
+SELECT setval(pg_get_serial_sequence('public.stock_movements', 'id'), coalesce(max(id), 1)) FROM public.stock_movements;
 
 COMMIT;
 
 -- Mensaje de confirmación
 DO $$
 BEGIN
-    RAISE NOTICE 'Script de población ejecutado correctamente';
-    RAISE NOTICE 'Proveedores insertados: %', (SELECT COUNT(*) FROM public.suppliers);
-    RAISE NOTICE 'Productos insertados: %', (SELECT COUNT(*) FROM public.products);
-    RAISE NOTICE 'Pedidos insertados: %', (SELECT COUNT(*) FROM public.orders);
-    RAISE NOTICE 'Items de pedido insertados: %', (SELECT COUNT(*) FROM public.order_items);
-    RAISE NOTICE 'Movimientos de stock insertados: %', (SELECT COUNT(*) FROM public.stock_movements);
+    RAISE NOTICE 'Script ejecutado. Datos de prueba cargados correctamente.';
 END $$;
