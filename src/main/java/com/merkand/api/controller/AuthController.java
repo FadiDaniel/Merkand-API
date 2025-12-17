@@ -65,7 +65,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         try {
-            if (userRepo.findByUsername(request.getUsername()).isPresent()) {
+            if (userRepo.findByUsernameAndActiveTrue(request.getUsername()).isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body(new ErrorResponse("existing username"));
             }

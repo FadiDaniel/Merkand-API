@@ -10,7 +10,7 @@ import lombok.*;
 @Table(name = "order_items")
 public class OrderItem {
     @Id
-    private Long id;
+    private Long itemId;
     private int quantity;
     private double unitPrice;
     private double subTotal;

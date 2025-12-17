@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,9 +15,11 @@ public class OrderDto {
     private LocalDate orderDate;
     private double totalAmount;
     private String status; // "PENDING", "RECEIVED", "CANCELLED"
+    private List<OrderItemDto> orderItemList; // ¿enviar la lista completa? evaluar
+    private String observations;
+    private Long supplierId;
     private String supplierName;
-    private String supplierId;
-    private int orderItemListCount; // ¿enviar la lista completa? evaluar
-
+    private Long userId;
+    private String userName;
 
 }
