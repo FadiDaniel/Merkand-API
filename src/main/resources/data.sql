@@ -71,7 +71,7 @@ WHERE NOT EXISTS (
 -- ============================================
 -- TABLA: ORDER_ITEMS (Ítems de Pedido)
 -- ============================================
-INSERT INTO public.order_items (id, order_id, product_id, quantity, unit_price, sub_total)
+INSERT INTO public.order_items (item_id, order_id, product_id, quantity, unit_price, sub_total)
 SELECT * FROM (VALUES
                    -- Pedido 1 (Lácteos - 2024-10-10)
                    (1, 1, 1, 100, 1.00, 100.00),
@@ -107,9 +107,9 @@ SELECT * FROM (VALUES
                    -- Pedido 8 (Carnes - 2024-12-12 - Pendiente)
                    (18, 8, 3, 40, 10.00, 400.00),
                    (19, 8, 18, 50, 3.60, 180.00)
-              ) AS new_order_items(id, order_id, product_id, quantity, unit_price, sub_total)
+              ) AS new_order_items(item_id, order_id, product_id, quantity, unit_price, sub_total)
 WHERE NOT EXISTS (
-    SELECT 1 FROM public.order_items WHERE order_items.id = new_order_items.id
+    SELECT 1 FROM public.order_items WHERE order_items.item_id = new_order_items.item_id
 );
 
 -- ============================================

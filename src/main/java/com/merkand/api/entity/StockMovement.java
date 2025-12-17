@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -14,13 +15,12 @@ import java.time.LocalDate;
 @Table(name = "stock_movements")
 public class StockMovement {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int quantity;
     @Enumerated(EnumType.STRING)
     private MovementType movementType; // "IN", "OUT", "ADJUST"
     private String reference;
-    private LocalDate createdAt;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
