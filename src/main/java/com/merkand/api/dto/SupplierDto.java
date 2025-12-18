@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,5 +18,5 @@ public class SupplierDto {
     private String address;
     private boolean active;
     private List<ProductDto> productList;
-    private List<OrderDto> orderList;
+    //private List<OrderDto> orderList;
 }
