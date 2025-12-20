@@ -1,5 +1,7 @@
 <div align="center">
-  <h1>Merkand-API</h1>
+  
+  **[English](README.md) | [Español](README.es.md)** 
+  <h1>Merkand API - Inventory Management System</h1>
 </div>
 <!--  
 - Datos de prueba provenientes de "Grocery Products Dataset": <a href="https://www.kaggle.com/datasets/computingvictor/mercadoan-inventory?resource=download">Kaggle dataset</a> 
