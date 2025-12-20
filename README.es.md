@@ -184,8 +184,8 @@ POST /auth/login
 Content-Type: application/json
 
 {
-  "username": "admin1",
-  "password": "admin1"
+  "username": "test1",
+  "password": "test1"
 }
 ```
 
@@ -194,7 +194,7 @@ Respuesta:
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "type": "Bearer",
-  "username": "admin1",
+  "username": "test1",
   "role": "ROLE_ADMIN"
 }
 ```
