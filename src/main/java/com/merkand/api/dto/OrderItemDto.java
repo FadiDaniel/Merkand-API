@@ -1,9 +1,5 @@
 package com.merkand.api.dto;
 
-import com.merkand.api.entity.Order;
-import com.merkand.api.entity.Product;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

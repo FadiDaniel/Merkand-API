@@ -6,7 +6,6 @@ import com.merkand.api.repository.OrderRepo;
 import com.merkand.api.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -33,7 +32,7 @@ public class OrderServImpl implements OrderService {
 
     @Override
     public void delete(Long orderId) {
-        repo.deleteById(orderId);
+        repo.softDeleteById(orderId);
     }
 
     @Override

@@ -29,9 +29,8 @@ public class ProductServImpl implements ProductService {
         repo.save(product);
     }
 
-    @Override
     public void delete(Long productId) {
-        repo.deleteById(productId);
+        repo.softDeleteById(productId);
     }
 
     @Override

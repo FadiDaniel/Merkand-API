@@ -31,7 +31,7 @@ public class StockMovementServImpl implements StockMovementService {
 
     @Override
     public void delete(Long movementId) {
-        repo.deleteById(movementId);
+//        repo.deleteById(movementId);
     }
 
     @Override

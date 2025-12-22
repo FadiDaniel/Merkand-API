@@ -32,7 +32,7 @@ public class SupplierServImpl implements SupplierService {
 
     @Override
     public void delete(Long supplierId) {
-        repo.deleteById(supplierId);
+        repo.softDeleteById(supplierId);
     }
 
     @Override

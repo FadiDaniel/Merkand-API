@@ -15,7 +15,7 @@ public class OrderDto {
     private LocalDate orderDate;
     private double totalAmount;
     private String status; // "PENDING", "RECEIVED", "CANCELLED"
-    private List<OrderItemDto> orderItemList; // ¿enviar la lista completa? evaluar
+    private List<OrderItemDto> orderItemList;
     private String observations;
     private Long supplierId;
     private String supplierName;

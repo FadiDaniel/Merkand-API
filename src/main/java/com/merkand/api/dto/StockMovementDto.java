@@ -18,7 +18,6 @@ public class StockMovementDto {
     private String reference;
     private LocalDateTime date;
     private Long productId;
-    private String productName;
     private Long userId;
     private String userName;
 }
