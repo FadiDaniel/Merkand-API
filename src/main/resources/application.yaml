@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost/Merkand # localhost:5433/Merkand
     username: postgres #root
-    password: root #root123@
+    password: root #root1234@
     driver-class-name: org.postgresql.Driver
 token:
   signing:
