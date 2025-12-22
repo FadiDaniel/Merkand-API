@@ -7,9 +7,9 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://localhost/Merkand # localhost:5433/Merkand
-    username: postgres #root
-    password: root #root1234@
+    url: jdbc:postgresql://localhost:5433/Merkand
+    username: root
+    password: root1234@
     driver-class-name: org.postgresql.Driver
 token:
   signing:

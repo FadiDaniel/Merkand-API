@@ -7,12 +7,12 @@ INSERT INTO public.users (id, active, password, role, username) VALUES
 
 -- 1. POBLAR TABLA: suppliers
 INSERT INTO public.suppliers (id, active, address, contact_name, email, name, nif, phone) VALUES
+(1, true, 'Calle Mayor 10, Madrid', 'Ana Gómez', 'contacto@lacteasur.com', 'Distribuidora Láctea del Sur', 'B12345678', '555-1234'),
 (2, true, 'Av. Central 50, Barcelona', 'Roberto Funes', 'ventas@carnepremium.com', 'Carnes Premium S.A.', 'B87654321', '555-5678'),
+(3, true, 'Polígono Industrial 3, Valencia', 'Carlos Ruiz', 'pedidos@frescoshnos.com', 'Alimentos Frescos Hnos.', 'B45678901', '555-9012'),
+(4, true, 'Ronda Exterior 25, Sevilla', 'Marta Vidal', 'info@bebidasmundiales.com', 'Bebidas Mundiales Ltda.', 'B23456789', '555-3456'),
 (5, true, 'Polígono Calle C, Bilbao', 'Elena Soto', 'contacto@limpiezas.es', 'Fitosanitarios y Limpieza S.L.', 'B34567890', '555-7788'),
 (6, true, 'Av. del Puerto 15, Cádiz', 'Javier Cano', 'ventas@congeladosrapidos.net', 'Productos Congelados Rápidos', 'B56789012', '555-2020'),
-(4, true, 'Ronda Exterior 25, Sevilla', 'Marta Vidal', 'info@bebidasmundiales.com', 'Bebidas Mundiales Ltda.', 'B23456789', '555-3456'),
-(1, true, 'Calle Mayor 10, Madrid', 'Ana Gómez', 'contacto@lacteasur.com', 'Distribuidora Láctea del Sur', 'B12345678', '555-1234'),
-(3, true, 'Polígono Industrial 3, Valencia', 'Carlos Ruiz', 'pedidos@frescoshnos.com', 'Alimentos Frescos Hnos.', 'B45678901', '555-9012'),
 (7, true, 'Polígono Ind. Getafe, Madrid', 'Lucía Méndez', 'pedidos@distgalega.com', 'Distribuidora Galega', 'B99887766', '555-0011'),
 (8, true, 'Calle Norte 45, Santander', 'Pedro San Juan', 'info@sumnorte.es', 'Suministros del Norte', 'B55443322', '555-0022');
 
