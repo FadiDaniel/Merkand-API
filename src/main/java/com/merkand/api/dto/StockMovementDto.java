@@ -1,8 +1,5 @@
 package com.merkand.api.dto;
 
-import com.merkand.api.entity.Product;
-import com.merkand.api.entity.User;
-import com.merkand.api.entity.enums.MovementType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
