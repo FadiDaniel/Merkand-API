@@ -7,7 +7,7 @@
   [![Java](https://img.shields.io/badge/Java-21-007396?style=flat&logo=openjdk)](https://openjdk.org/)
   [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F?style=flat&logo=springboot)](https://spring.io/projects/spring-boot)
   [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=flat&logo=postgresql)](https://www.postgresql.org/)
-  [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+  [![License](https://img.shields.io/badge/License-Copyright-green.svg)](LICENSE)
 </div>
 
 A robust REST API built with **Spring Boot 4.0** for inventory management and supplier purchase orders in retail environments. Designed as an internal system for employees, focused on productivity, control, and auditability.
