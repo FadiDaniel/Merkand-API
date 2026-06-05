@@ -1,25 +1,23 @@
 package com.merkand.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class OrderDto {
-    private Long id;
-    private String orderNumber;
-    private LocalDate orderDate;
-    private double totalAmount;
-    private String status; // "PENDING", "RECEIVED", "CANCELLED"
-    private List<OrderItemDto> orderItemList;
-    private String observations;
-    private Long supplierId;
-    private String supplierName;
-    private Long userId;
-    private String userName;
-
-}
+/**
+ * Data Transfer Object for Order entity.
+ * Uses Java 21 Record for reduced boilerplate and includes validation constraints.
+ */
+public record OrderDto(
+        Long id,
+        @NotBlank String orderNumber,
+        @PastOrPresent LocalDate orderDate,
+        @Positive double totalAmount,
+        @Pattern(regexp = "PENDING|RECEIVED|CANCELLED") String status,
+        List<OrderItemDto> orderItemList,
+        String observations,
+        Long supplierId,
+        String supplierName,
+        Long userId,
+        String userName
+) {}

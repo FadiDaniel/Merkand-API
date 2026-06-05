@@ -30,7 +30,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         ErrorResponse errorDetails = new ErrorResponse(
-                "Access denied: Not an administrator"
+       //         "Access denied: Not an administrator"
         );
 
         OutputStream out = response.getOutputStream();

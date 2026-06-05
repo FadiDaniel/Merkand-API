@@ -36,6 +36,11 @@ public class SupplierServImpl implements SupplierService {
     }
 
     @Override
+    public boolean existsById(Long Id) {
+        return repo.existsById(Id);
+    }
+
+    @Override
     public ArrayList<Supplier> getActiveSuppliers() {
         return repo.findByActiveTrue();
     }

@@ -1,23 +1,19 @@
 package com.merkand.api.dto;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class StockMovementDto {
-    @Id
-    private Long id;
-    private int quantity;
-    private String movementType; // "IN", "OUT", "ADJUST"
-    private String reference;
-    private LocalDateTime date;
-    private Long productId;
-    private Long userId;
-    private String userName;
-}
+/**
+ * Data Transfer Object for StockMovement entity.
+ * Uses Java 21 Record for reduced boilerplate and includes validation constraints.
+ */
+public record StockMovementDto(
+        Long id,
+        @NotNull @Min(1) int quantity,
+        @Pattern(regexp = "IN|OUT|ADJUST") String movementType,
+        String reference,
+        @PastOrPresent LocalDateTime date,
+        @NotNull Long productId,
+        @NotNull Long userId,
+        String userName
+) {}

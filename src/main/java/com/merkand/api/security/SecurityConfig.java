@@ -14,11 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration; // Importación necesaria para CORS
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource; // Importación necesaria para CORS
-import org.springframework.web.filter.CorsFilter; // Importación necesaria para CORS
-
-import java.util.List; // Importación necesaria para List.of()
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -77,10 +76,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // ÚNICA RUTA PÚBLICA: Permite el acceso al login (POST)
+                        // RUTAS PÚBLICAS: Acceso sin autenticación
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                        // RUTA RESTRINGIDA POR ROL: Solo el ADMIN puede registrar nuevos usuarios
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").hasRole("ADMIN")
+                        // Swagger UI y documentación de API (públicos)
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         //  PREDETERMINADO: Todas las demás solicitudes requieren autenticación (JWT)
                         .anyRequest().authenticated()
                 )

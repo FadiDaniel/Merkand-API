@@ -31,11 +31,16 @@ public class StockMovementServImpl implements StockMovementService {
 
     @Override
     public void delete(Long movementId) {
-//        repo.deleteById(movementId);
+        repo.deleteById(movementId);
     }
 
     @Override
     public ArrayList<StockMovement> getByProductId(Long productId) {
         return repo.findByProduct_Id(productId);
+    }
+
+    @Override
+    public boolean existsById(Long movementId) {
+        return repo.existsById(movementId);
     }
 }

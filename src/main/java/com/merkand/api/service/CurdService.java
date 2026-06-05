@@ -7,4 +7,5 @@ public interface CurdService<T> {
     public ArrayList<T> getAll();
     public void save(T entity);
     public void delete(Long Id);
+    public boolean existsById(Long Id);
 }

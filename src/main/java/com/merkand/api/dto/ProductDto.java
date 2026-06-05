@@ -1,29 +1,27 @@
 package com.merkand.api.dto;
 
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProductDto {
-    @Id
-    private Long id;
-    private String name;
-    private String description;
-    private String category;
-    private double price;
-    private int stock;
-    private int minimumStock;
-    private boolean active;
-    private String unitSale;
-    private String unitMeasure;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
-    private Long supplierId;
-    private String supplierName;
-
-}
+/**
+ * Data Transfer Object for Product entity.
+ * Uses Java 21 Record for reduced boilerplate and includes validation constraints.
+ */
+public record ProductDto(
+        Long id,
+        @NotBlank String name,
+        String description,
+        String category,
+        @Positive double price,
+        @Min(0) int stock,
+        @Min(0) int minimumStock,
+        boolean active,
+        String unitSale,
+        String unitMeasure,
+        LocalDate createdAt,
+        LocalDate updatedAt,
+        Long supplierId,
+        String supplierName
+) {}

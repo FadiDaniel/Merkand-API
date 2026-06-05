@@ -2,10 +2,10 @@ package com.merkand.api.controller;
 
 import com.merkand.api.dto.SupplierDto;
 import com.merkand.api.entity.Supplier;
-import com.merkand.api.service.implementation.SupplierServImpl;
+import com.merkand.api.exception.ResourceNotFoundException;
+import com.merkand.api.mapper.SupplierMapper;
+import com.merkand.api.service.SupplierService;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,69 +15,49 @@ import java.util.List;
 @RequestMapping("/api/suppliers")
 @CrossOrigin(origins="http://localhost:4200")
 public class SupplierController {
-    @Autowired
-    private SupplierServImpl service;
-    @Autowired
-    private ModelMapper mapper;
+    private final SupplierService service;
+    private final SupplierMapper mapper;
+
+    public SupplierController(SupplierService service, SupplierMapper mapper) {
+        this.service = service;
+        this.mapper = mapper;
+    }
 
     @GetMapping
-    public ResponseEntity<?> getAllSuppliers(){
-        try {
-            List<SupplierDto> suppliersDto = service.getAll()
-                    .stream()
-                    .map(supplier -> mapper.map(supplier, SupplierDto.class))
-                    .toList();
-            System.out.println(suppliersDto);
-            return ResponseEntity.ok(suppliersDto);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error al obtener la lista de proveedores: " + e.getMessage());
-        }
+    public ResponseEntity<List<SupplierDto>> getAllSuppliers(){
+        List<SupplierDto> suppliersDto = service.getAll()
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+        return ResponseEntity.ok(suppliersDto);
     }
 
     @PostMapping
-    public ResponseEntity<?> createSupplier(@Valid @RequestBody SupplierDto supplierDto){
-        try {
-            var supplier = mapper.map(supplierDto, Supplier.class);
-            service.save(supplier);
-            var createdSupplierDto = mapper.map(supplier, SupplierDto.class);
-            return ResponseEntity.status(201).body(createdSupplierDto);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Error al crear el proveedor: " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return ResponseEntity.internalServerError().body("Error interno al procesar el proveedor");
-        }
+    public ResponseEntity<SupplierDto> createSupplier(@Valid @RequestBody SupplierDto supplierDto){
+        var supplier = mapper.toEntity(supplierDto);
+        service.save(supplier);
+        return ResponseEntity.status(201).body(mapper.toDto(supplier));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateSupplier(@PathVariable Long id, @Valid @RequestBody SupplierDto supplierDto) {
-        try {
-            Supplier existingSupplier = service.get(id);
-            if (existingSupplier == null) {
-                return ResponseEntity.status(404).body("Proveedor con ID " + id + " no encontrado");
-            }
-            mapper.map(supplierDto, existingSupplier);
-            existingSupplier.setId(id);
-            service.save(existingSupplier);
-            return ResponseEntity.ok(mapper.map(existingSupplier, SupplierDto.class));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Error al actualizar el proveedor: " + e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error interno al actualizar el proveedor");
+    public ResponseEntity<SupplierDto> updateSupplier(@PathVariable Long id, @Valid @RequestBody SupplierDto supplierDto) {
+        Supplier existingSupplier = service.get(id);
+        if (existingSupplier == null) {
+            throw new ResourceNotFoundException("Proveedor con ID " + id + " no encontrado");
         }
+        mapper.updateEntityFromDto(supplierDto, existingSupplier);
+        existingSupplier.setId(id);
+        service.save(existingSupplier);
+        return ResponseEntity.ok(mapper.toDto(existingSupplier));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deactivateSupplier(@PathVariable Long id) {
-        try {
-            Supplier existingSupplier = service.get(id);
-            if (existingSupplier == null) {
-                return ResponseEntity.status(404).body("Proveedor con ID " + id + " no encontrado");
-            }
-            service.delete(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error al eliminar el proveedor: " + e.getMessage());
+    public ResponseEntity<Void> deactivateSupplier(@PathVariable Long id) {
+        Supplier existingSupplier = service.get(id);
+        if (existingSupplier == null) {
+            throw new ResourceNotFoundException("Proveedor con ID " + id + " no encontrado");
         }
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

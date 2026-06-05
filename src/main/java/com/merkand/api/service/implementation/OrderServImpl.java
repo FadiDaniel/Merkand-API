@@ -36,6 +36,11 @@ public class OrderServImpl implements OrderService {
     }
 
     @Override
+    public boolean existsById(Long Id) {
+        return repo.existsById(Id);
+    }
+
+    @Override
     public ArrayList<Order> getByStatus(Status status) {
         return repo.findByStatus(status);
     }

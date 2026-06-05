@@ -34,6 +34,11 @@ public class ProductServImpl implements ProductService {
     }
 
     @Override
+    public boolean existsById(Long Id) {
+        return repo.existsById(Id);
+    }
+
+    @Override
     public ArrayList<Product> getActiveProducts() {
         return repo.findByActiveTrue();
     }
