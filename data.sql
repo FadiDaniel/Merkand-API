@@ -2,8 +2,8 @@ BEGIN;
 
 -- POBLAR TABLA: users
 INSERT INTO public.users (id, active, password, role, username) VALUES
-(1, true, '$2a$12$WcY6iLJquantaUiZSOdmwOsm3KofasLhKzM/7ORGsosz1PMoWdmQW', 'ADMIN', 'test1'),
-(2, true, '$2a$12$.1KEv/3PlIldCKCYzUAgzu.bPw/lQBlUCqLyw5S0bSoY9NTxYk1TC', 'OPERATOR', 'user1');
+(1, true, '$2a$12$NvPdzjngjN6y91tRQSyg2uPfNDxvnXf8tHypt.kSfgDgIl99QBJM6', 'ADMIN', 'test01'),
+(2, true, '$2a$12$d6kBeP64NYfSEELmB/lNOuAe/OUhVEaetZwkcKasCC.mJdR9hCy.W', 'OPERATOR', 'user01');
 
 -- 1. POBLAR TABLA: suppliers
 INSERT INTO public.suppliers (id, active, address, contact_name, email, name, nif, phone) VALUES

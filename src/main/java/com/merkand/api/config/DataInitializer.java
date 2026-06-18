@@ -60,15 +60,15 @@ public class DataInitializer {
         // Passwords are encoded versions of "test1" and "user1"
         User admin = new User();
         admin.setId(1L);
-        admin.setUsername("test1");
-        admin.setPassword("$2a$12$WcY6iLJquantaUiZSOdmwOsm3KofasLhKzM/7ORGsosz1PMoWdmQW");
+        admin.setUsername("test01");
+        admin.setPassword("$2a$12$NvPdzjngjN6y91tRQSyg2uPfNDxvnXf8tHypt.kSfgDgIl99QBJM6");
         admin.setActive(true);
         admin.setRole(com.merkand.api.entity.enums.Role.ADMIN);
 
         User operator = new User();
         operator.setId(2L);
-        operator.setUsername("user1");
-        operator.setPassword("$2a$12$.1KEv/3PlIldCKCYzUAgzu.bPw/lQBlUCqLyw5S0bSoY9NTxYk1TC");
+        operator.setUsername("user01");
+        operator.setPassword("$2a$12$d6kBeP64NYfSEELmB/lNOuAe/OUhVEaetZwkcKasCC.mJdR9hCy.W");
         operator.setActive(true);
         operator.setRole(com.merkand.api.entity.enums.Role.OPERATOR);
 
