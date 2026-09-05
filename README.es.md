@@ -140,12 +140,12 @@ Todos los endpoints requieren autenticación excepto:
    cd Merkand-API
    ```
 
-2. **Configurar variables de entorno**
-   ```bash
-   export JWT_SECRET=tu-clave-secreta-aqui
-   export DB_URL=jdbc:postgresql://localhost:5432/merkand
-   export DB_USERNAME=tu-usuario-bd
-   export DB_PASSWORD=tu-contraseña-bd
+2. **Configurar variables de entorno en `application.yml`**
+   ```yaml
+   key: JWT_SECRET=tu-clave-secreta-aqui
+   url: DB_URL=jdbc:postgresql://localhost:5432/merkand
+   username: DB_USERNAME=tu-usuario-bd
+   password: DB_PASSWORD=tu-contraseña-bd
    ```
 
 3. **Compilar el proyecto**

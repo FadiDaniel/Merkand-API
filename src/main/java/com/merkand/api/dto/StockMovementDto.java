@@ -2,6 +2,7 @@ package com.merkand.api.dto;
 
 import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Data Transfer Object for StockMovement entity.
@@ -9,11 +10,10 @@ import java.time.LocalDateTime;
  */
 public record StockMovementDto(
         Long id,
-        @NotNull @Min(1) int quantity,
         @Pattern(regexp = "IN|OUT|ADJUST") String movementType,
         String reference,
         @PastOrPresent LocalDateTime date,
-        @NotNull Long productId,
         @NotNull Long userId,
-        String userName
+        String userName,
+        List<MovementItemDto> items
 ) {}

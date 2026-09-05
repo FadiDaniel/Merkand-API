@@ -36,7 +36,7 @@ public class StockMovementServImpl implements StockMovementService {
 
     @Override
     public ArrayList<StockMovement> getByProductId(Long productId) {
-        return repo.findByProduct_Id(productId);
+        return repo.findByItems_Product_Id(productId);
     }
 
     @Override

@@ -36,5 +36,5 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<OrderItem> orderItemList;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<StockMovement> stockMovementList;
+    private List<MovementItem> movementItemList;
 }

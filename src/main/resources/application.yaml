@@ -7,9 +7,9 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://host.docker.internal:5432/Merkand?ssl=disable #:5433/Merkand
-    username: postgres #root
-    password: root #root1234@
+    url: jdbc:postgresql://localhost:5432/Merkand  #docker -> //host.docker.internal:5432/Merkand?ssl=disable  #not-docker ->//localhost:5432/Merkand
+    username: postgres #root  #postgres
+    password: root #root1234@  #root
     driver-class-name: org.postgresql.Driver
 token:
   signing:
