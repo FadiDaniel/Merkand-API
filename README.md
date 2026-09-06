@@ -1,18 +1,18 @@
 <div align="center">
-  
-  # Merkand API - Inventory Management System 🚀
-  
-  **[English](README.md) | [Español](README.es.md)**
-  
-  [![Java](https://img.shields.io/badge/Java-21-007396?style=flat&logo=openjdk)](https://openjdk.org/)
-  [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F?style=flat&logo=springboot)](https://spring.io/projects/spring-boot)
-  [![H2 Database](https://img.shields.io/badge/H2-Database-4169E1?style=flat)](https://www.h2database.com/)
-  [![MapStruct](https://img.shields.io/badge/MapStruct-1.6.2-orange?style=flat&logo=mapstruct)](https://mapstruct.org/)
-  [![Swagger](https://img.shields.io/badge/Swagger-2.3.0-85EA2D?style=flat&logo=swagger)](https://swagger.io/)
-  [![License](https://img.shields.io/badge/License-Copyright-green.svg)](LICENSE)
+
+# Merkand API - Warehouse Management System 🚀
+
+**[English](README.md) | [Español](README.es.md)**
+
+[![Java](https://img.shields.io/badge/Java-21-007396?style=flat&logo=openjdk)](https://openjdk.org/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F?style=flat&logo=springboot)](https://spring.io/projects/spring-boot)
+[![H2 Database](https://img.shields.io/badge/H2-Database-4169E1?style=flat)](https://www.h2database.com/)
+[![MapStruct](https://img.shields.io/badge/MapStruct-1.6.2-orange?style=flat&logo=mapstruct)](https://mapstruct.org/)
+[![Swagger](https://img.shields.io/badge/Swagger-2.3.0-85EA2D?style=flat&logo=swagger)](https://swagger.io/)
+[![License](https://img.shields.io/badge/License-Copyright-green.svg)](LICENSE)
 </div>
 
->A robust REST API built with **Spring Boot 4.0** for inventory management and supplier purchase orders in retail environments. Designed as an internal system for employees, focused on productivity, control, and auditability.
+>A robust REST API built with **Spring Boot 4.0** for warehouse management and supplier purchase orders in retail environments. Designed as an internal system for employees, focused on productivity, control, and auditability.
 
 > [!IMPORTANT]
 > This API works in conjunction with the frontend [Merkand-Client](https://github.com/FadiDaniel/Merkand-client) built with Angular 21.
@@ -21,7 +21,7 @@
 
 ## 🎯 System Objectives
 
-- **Internal Inventory Control** - Real-time stock tracking and management
+- **Internal Warehouse Control** - Real-time stock tracking and management
 - **Purchase Automation** - Streamlined restock ordering process
 - **Movement Auditing** - Complete history of stock movements
 - **Low Stock Alerts** - Proactive inventory warnings
@@ -134,11 +134,12 @@ All endpoints require authentication except:
 - **Git**
 - **Docker** (optional, for containerized implementation)
 
-### Instalación y Ejecución
+### Installation and Setup
 
-#### Opción 1: Ejecución Local (Sin Docker)
+### Option 1: Local Execution (No Docker)
+[Go to Docker option 🐳](#option-2-docker-execution-)
 
-1. **Clone el repositorio**
+1. **Clone the repository**
    ```bash
    git clone https://github.com/FadiDaniel/Merkand-API.git
    cd Merkand-API
@@ -163,7 +164,7 @@ All endpoints require authentication except:
    java -jar target/merkand-api.jar
    ```
 
-#### Opción 2: Ejecución con Docker
+### Option 2: Docker Execution 🐳
 
 1. **Clone the repository**
    ```bash
