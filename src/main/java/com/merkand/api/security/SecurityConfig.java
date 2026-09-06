@@ -81,12 +81,17 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").hasRole("ADMIN")
                         // Swagger UI y documentación de API (públicos)
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        // H2 Console (público)
+                        .requestMatchers("/h2-console/**").permitAll()
                         //  PREDETERMINADO: Todas las demás solicitudes requieren autenticación (JWT)
                         .anyRequest().authenticated()
                 )
                 // Configuración de Manejo de Excepciones: Conecta el manejador 403
                 .exceptionHandling(exceptions -> exceptions
                         .accessDeniedHandler(accessDeniedHandler) // Maneja el HTTP 403 Forbidden
+                )
+                .headers(headers -> headers
+                        .frameOptions(frameOptions -> frameOptions.sameOrigin())
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
