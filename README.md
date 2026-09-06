@@ -6,7 +6,7 @@
   
   [![Java](https://img.shields.io/badge/Java-21-007396?style=flat&logo=openjdk)](https://openjdk.org/)
   [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F?style=flat&logo=springboot)](https://spring.io/projects/spring-boot)
-  [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=flat&logo=postgresql)](https://www.postgresql.org/)
+  [![H2 Database](https://img.shields.io/badge/H2-Database-4169E1?style=flat)](https://www.h2database.com/)
   [![MapStruct](https://img.shields.io/badge/MapStruct-1.6.2-orange?style=flat&logo=mapstruct)](https://mapstruct.org/)
   [![Swagger](https://img.shields.io/badge/Swagger-2.3.0-85EA2D?style=flat&logo=swagger)](https://swagger.io/)
   [![License](https://img.shields.io/badge/License-Copyright-green.svg)](LICENSE)
@@ -60,7 +60,7 @@
 - **Spring Data JPA** - ORM and database abstraction
 - **Spring Security** - Authentication and authorization
 - **JWT** - Stateless authentication tokens
-- **PostgreSQL 17** - Relational database
+- **H2 Database** - In-memory database for development and testing
 - **Maven** - Dependency management and build tool
 - **MapStruct 1.6.2** - Type-safe, compile-time object mapping (replaces ModelMapper)
 - **Springdoc OpenAPI 2.3.0** - Swagger UI for API documentation
@@ -94,6 +94,10 @@ Each layer has clear responsibilities:
 
 ---
 
+## 🏗️ Current ERM Status
+
+![ERM.png](img/ERM.png)
+
 ## 🔐 Security
 
 ### Authentication Flow
@@ -106,7 +110,7 @@ Each layer has clear responsibilities:
 All endpoints require authentication except:
 - `POST /api/auth/login` - User authentication
 - `POST /api/auth/register` - Admin-only user registration
-- Swagger UI documentation: `/swagger-ui.html`, `/v3/api-docs/**` (public for 개발/testing)
+- Swagger UI documentation: `/swagger-ui.html`, `/v3/api-docs/**` (public for development/testing)
 
 ### Roles & Permissions
 - **ROLE_ADMIN** - Full system access
@@ -126,7 +130,6 @@ All endpoints require authentication except:
 ### Prerequisites
 - **Java 21** or higher
 - **Maven 3.9+**
-- **PostgreSQL 17**
 - **Git**
 - **Docker** (optional, for containerized implementation)
 
@@ -143,9 +146,6 @@ All endpoints require authentication except:
 2. **Configure environment variables in `application.yml`**
    ```yaml
    key: JWT_SECRET=your-super-secret-key-here
-   url: DB_URL=jdbc:postgresql://localhost:5432/merkand
-   username: DB_USERNAME=your-db-username
-   password: DB_PASSWORD=your-db-password
    ```
 
 3. **Compile the project**
@@ -175,18 +175,15 @@ All endpoints require authentication except:
    docker build -t merkand-api .
    ```
 
-3. **Run with Docker Compose (includes PostgreSQL)**
+3. **Run with Docker Compose (no external database required)**
    ```bash
    docker-compose up -d
    ```
 
-4. **Or run standalone (requires external PostgreSQL)**
+4. **Or run standalone (uses in-memory H2 database)**
    ```bash
    docker run -p 8080:8080 \
      -e JWT_SECRET=your-secret \
-     -e DB_URL=jdbc:postgresql://host:5432/merkand \
-     -e DB_USERNAME=your-db-user \
-     -e DB_PASSWORD=your-db-password \
      merkand-api
    ```
 
@@ -210,13 +207,15 @@ Key configurations in `application.properties` or `application.yml`:
 ```yaml
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:h2:mem:merkanddb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
 
 jwt:
   secret: ${JWT_SECRET}
@@ -231,9 +230,6 @@ server:
 | Variable | Description | Required |
 |----------|-------------|----------|
 | `JWT_SECRET` | Secret key for JWT signing | ✅ Yes |
-| `DB_URL` | PostgreSQL connection URL | ✅ Yes |
-| `DB_USERNAME` | Database username | ✅ Yes |
-| `DB_PASSWORD` | Database password | ✅ Yes |
 
 ---
 

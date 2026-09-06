@@ -2,15 +2,15 @@ spring:
   application:
     name: api
   jpa:
-    database: postgresql
     show-sql: true
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/Merkand  #docker -> //host.docker.internal:5432/Merkand?ssl=disable  #not-docker ->//localhost:5432/Merkand
-    username: postgres #root  #postgres
-    password: root #root1234@  #root
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:merkanddb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
 token:
   signing:
     key: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351

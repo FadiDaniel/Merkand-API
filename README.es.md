@@ -6,7 +6,7 @@
 
 [![Java](https://img.shields.io/badge/Java-21-007396?style=flat&logo=openjdk)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F?style=flat&logo=springboot)](https://spring.io/projects/spring-boot)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=flat&logo=postgresql)](https://www.postgresql.org/)
+[![H2 Database](https://img.shields.io/badge/H2-Database-4169E1?style=flat)](https://www.h2database.com/)
 [![MapStruct](https://img.shields.io/badge/MapStruct-1.6.2-orange?style=flat&logo=mapstruct)](https://mapstruct.org/)
 [![Swagger](https://img.shields.io/badge/Swagger-2.3.0-85EA2D?style=flat&logo=swagger)](https://swagger.io/)
 [![License](https://img.shields.io/badge/Licencia-Copyright-green.svg)](LICENSE)
@@ -60,7 +60,7 @@
 - **Spring Data JPA** - ORM y abstracción de base de datos
 - **Spring Security** - Autenticación y autorización
 - **JWT** - Tokens de autenticación sin estado
-- **PostgreSQL 17** - Base de datos relacional
+- **H2 Database** - Base de datos en memoria para desarrollo y pruebas
 - **Maven** - Gestión de dependencias y herramienta de construcción
 - **MapStruct 1.6.2** - Mapeo de objetos tipado y seguro en tiempo de compilación (reemplaza a ModelMapper)
 - **Springdoc OpenAPI 2.3.0** - Swagger UI para documentación de la API
@@ -94,6 +94,10 @@ Cada capa tiene responsabilidades claramente definidas:
 
 ---
 
+## 🏗️ Estado actual del ERM
+
+![ERM.png](img/ERM.png)
+
 ## 🔐 Seguridad
 
 ### Flujo de Autenticación
@@ -126,7 +130,6 @@ Todos los endpoints requieren autenticación excepto:
 ### Requisitos Previos
 - **Java 21** o superior
 - **Maven 3.9+**
-- **PostgreSQL 17**
 - **Git**
 - **Docker** (opcional, para implementación en contenedores)
 
@@ -212,13 +215,15 @@ Configuraciones clave en `application.properties` o `application.yml`:
 ```yaml
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:h2:mem:merkanddb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
 
 jwt:
   secret: ${JWT_SECRET}
