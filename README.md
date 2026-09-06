@@ -68,7 +68,6 @@
 - **Validation (Bean Validation 3.x)** - Built-in validation annotations in DTOs
 
 ### Layered Architecture
-
 Modular monolithic application with well-defined layers:
 
 ```
@@ -97,6 +96,8 @@ Each layer has clear responsibilities:
 ## 🏗️ Current ERM Status
 
 ![ERM.png](img/ERM.png)
+
+---
 
 ## 🔐 Security
 
@@ -196,7 +197,10 @@ Once the application is running:
 - **OpenAPI JSON Specification**: http://localhost:8080/v3/api-docs
 - **OpenAPI YAML Specification**: http://localhost:8080/v3/api-docs.yaml
 
+[📖 Go to interactive documentation](#-api-documentation)
+
 > [!NOTE] The authentication endpoints (`/api/auth/*`) are public. All other endpoints require JWT authentication.
+
 ---
 
 ## ⚙️ Configuration
@@ -282,7 +286,7 @@ A multi-stage Dockerfile is provided for optimized builds:
 - Includes health check endpoint
 
 #### docker-compose.yml
-For easy local development with PostgreSQL:
+For easy local development (no external database required):
 ```yaml
 version: '3.8'
 
@@ -293,26 +297,6 @@ services:
       - "8080:8080"
     environment:
       - JWT_SECRET=your-super-secret-key-here
-      - DB_URL=jdbc:postgresql://db:5432/merkand
-      - DB_USERNAME=merkand_user
-      - DB_PASSWORD=merkand_pass
-    depends_on:
-      - db
-
-  db:
-    image: postgres:17
-    restart: unless-stopped
-    environment:
-      - POSTGRES_USER=merkand_user
-      - POSTGRES_PASSWORD=merkand_pass
-      - POSTGRES_DB=merkand
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-volumes:
-  postgres_data:
 ```
 
 #### Build and Run
@@ -320,15 +304,12 @@ volumes:
 # Build the Docker image
 docker build -t merkand-api .
 
-# Run with Docker Compose (includes PostgreSQL)
+# Run with Docker Compose (no external database required)
 docker-compose up -d
 
-# Or run standalone Docker container (requires external PostgreSQL)
+# Or run standalone Docker container (uses in-memory H2 database)
 docker run -p 8080:8080 \
   -e JWT_SECRET=your-secret \
-  -e DB_URL=jdbc:postgresql://host:5432/merkand \
-  -e DB_USERNAME=your-db-user \
-  -e DB_PASSWORD=your-db-password \
   merkand-api
 ```
 
@@ -357,8 +338,8 @@ POST /api/auth/login
 Content-Type: application/json
 
 {
-  "username": "test1",
-  "password": "test1"
+  "username": "test01",
+  "password": "test01"
 }
 ```
 
@@ -367,7 +348,7 @@ Response:
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "type": "Bearer",
-  "username": "test1",
+  "username": "test01",
   "role": "ROLE_ADMIN"
 }
 ```
@@ -449,7 +430,7 @@ This release incorporates several modern best practices:
 
 - [x] Add support for multiple user roles and permissions
 - [x] Create Docker Compose setup for easy local development
-- [ ] Add comprehensive unit tests for controllers and repositories
+- [x] Add comprehensive unit tests for repositories
 - [ ] Implement rate limiting to prevent abuse
 - [ ] Enhance reporting with advanced analytics
 - [ ] Implement file upload/download for product images/documents
@@ -471,7 +452,7 @@ See the [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Author
 
-**Fadi Daniel**
+**Fadi**
 - GitHub: [@FadiDaniel](https://github.com/FadiDaniel)
 
 ---

@@ -135,7 +135,8 @@ Todos los endpoints requieren autenticación excepto:
 
 ### Instalación y Ejecución
 
-#### Opción 1: Ejecución Local (Sin Docker)
+### Opción 1: Ejecución Local (Sin Docker)
+[Ir a opcion con Docker 🐳](#opción-2-ejecución-con-docker-)
 
 1. **Clonar el repositorio**
    ```bash
@@ -146,9 +147,6 @@ Todos los endpoints requieren autenticación excepto:
 2. **Configurar variables de entorno en `application.yml`**
    ```yaml
    key: JWT_SECRET=tu-clave-secreta-aqui
-   url: DB_URL=jdbc:postgresql://localhost:5432/merkand
-   username: DB_USERNAME=tu-usuario-bd
-   password: DB_PASSWORD=tu-contraseña-bd
    ```
 
 3. **Compilar el proyecto**
@@ -165,7 +163,7 @@ Todos los endpoints requieren autenticación excepto:
    java -jar target/merkand-api.jar
    ```
 
-#### Opción 2: Ejecución con Docker
+### Opción 2: Ejecución con Docker 🐳
 
 1. **Clonar el repositorio**
    ```bash
@@ -178,18 +176,15 @@ Todos los endpoints requieren autenticación excepto:
    docker build -t merkand-api .
    ```
 
-3. **Ejecutar con Docker Compose (incluye PostgreSQL)**
+3. **Ejecutar con Docker Compose **
    ```bash
    docker-compose up -d
    ```
 
-4. **O ejecutar de forma independiente (requiere PostgreSQL externo)**
+4. **O ejecutar de forma independiente **
    ```bash
    docker run -p 8080:8080 \
      -e JWT_SECRET=tu-secreto \
-     -e DB_URL=jdbc:postgresql://host:5432/merkand \
-     -e DB_USERNAME=tu-usuario-bd \
-     -e DB_PASSWORD=tu-contraseña-bd \
      merkand-api
    ```
 
@@ -198,12 +193,28 @@ Todos los endpoints requieren autenticación excepto:
 Una vez que la aplicación esté en ejecución:
 
 - **API Principal**: http://localhost:8080
-- **Documentación Swagger UI**: http://localhost:8080/swagger-ui.html
+- **Documentación interactiva de Swagger UI**: http://localhost:8080/swagger-ui.html
+
 - **Especificación OpenAPI JSON**: http://localhost:8080/v3/api-docs
 - **Especificación OpenAPI YAML**: http://localhost:8080/v3/api-docs.yaml
 
+[📖 Ir a la documentacion interactiva](#-documentación-de-la-api)
+
 > [!NOTE]
 > Los endpoints de autenticación (`/api/auth/*`) son públicos. Todos los demás endpoints requieren autenticación JWT.
+
+---
+
+---
+
+## 📖 Comprobar permanencia en la base de datos H2
+> 💡 **Nota sobre los datos**: La aplicación cuenta con un componente de inicialización automática (*Data Seeding*) que puebla la base de datos con tareas de ejemplo al arrancar. Esto permite que los endpoints sean funcionales y testeables desde el primer segundo sin necesidad de cargas manuales.
+#### `http://localhost:8080/h2-console`
+####   Confirma que la URL de conexión es correcta, probar conexión y luego conectar.
+
+
+#### Una vez conectado, ejecuta una consulta simple para comprobar que la tabla se inicializó con datos.
+
 
 ---
 
@@ -238,9 +249,6 @@ server:
 | Variable | Descripción | Requerida |
 |----------|-------------|-----------|
 | `JWT_SECRET` | Clave secreta para firma de JWT | ✅ Sí |
-| `DB_URL` | URL de conexión a PostgreSQL | ✅ Sí |
-| `DB_USERNAME` | Usuario de la base de datos | ✅ Sí |
-| `DB_PASSWORD` | Contraseña de la base de datos | ✅ Sí |
 
 ---
 
@@ -269,7 +277,7 @@ mvn jacoco:report
 - Pruebas unitarias completas para la capa de servicios (ejemplo: ProductServImplTest)
 - Uso de Mockito para el mock de dependencias
 - AssertJ para aserciones fluidas
-- Inicialización de datos de prueba mediante el componente @DataInitializer (perfiles dev/test)
+- Inicialización de datos de prueba mediante el componente @DataInitializer
 
 ---
 
@@ -293,7 +301,7 @@ Se proporciona un Dockerfile multi-etapa para construcciones optimizadas:
 - Incluye endpoint de health check
 
 #### docker-compose.yml
-Para un desarrollo local sencillo con PostgreSQL:
+Para un desarrollo local sencillo (sin base de datos externa requerida):
 ```yaml
 version: '3.8'
 
@@ -304,26 +312,6 @@ services:
       - "8080:8080"
     environment:
       - JWT_SECRET=tu-clave-secreta-aqui
-      - DB_URL=jdbc:postgresql://db:5432/merkand
-      - DB_USERNAME=merkand_user
-      - DB_PASSWORD=merkand_pass
-    depends_on:
-      - db
-
-  db:
-    image: postgres:17
-    restart: unless-stopped
-    environment:
-      - POSTGRES_USER=merkand_user
-      - POSTGRES_PASSWORD=merkand_pass
-      - POSTGRES_DB=merkand
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-volumes:
-  postgres_data:
 ```
 
 #### Construcción y Ejecución
@@ -331,15 +319,12 @@ volumes:
 # Construir la imagen Docker
 docker build -t merkand-api .
 
-# Ejecutar con Docker Compose (incluye PostgreSQL)
+# Ejecutar con Docker Compose (no se requiere base de datos externa)
 docker-compose up -d
 
-# O ejecutar un contenedor Docker independiente (requiere PostgreSQL externo)
+# O ejecutar un contenedor Docker independiente (usa base de datos en memoria H2)
 docker run -p 8080:8080 \
   -e JWT_SECRET=tu-secreto \
-  -e DB_URL=jdbc:postgresql://host:5432/merkand \
-  -e DB_USERNAME=tu-usuario-bd \
-  -e DB_PASSWORD=tu-contraseña-bd \
   merkand-api
 ```
 
@@ -368,8 +353,8 @@ POST /api/auth/login
 Content-Type: application/json
 
 {
-  "username": "test1",
-  "password": "test1"
+  "username": "test01",
+  "password": "test01"
 }
 ```
 
@@ -378,7 +363,7 @@ Respuesta:
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "type": "Bearer",
-  "username": "test1",
+  "username": "test01",
   "role": "ROLE_ADMIN"
 }
 ```
@@ -460,7 +445,7 @@ Esta versión incorpora varias buenas prácticas modernas:
 
 - [x] Añadir soporte para múltiples roles y permisos de usuario
 - [x] Crear configuración Docker Compose para desarrollo local sencillo
-- [ ] Añadir pruebas unitarias completas para controladores y repositorios
+- [x] Añadir pruebas unitarias completas para repositorios
 - [ ] Implementar limitación de tasa para prevenir abusos
 - [ ] Mejorar los reportes con analítica avanzada
 - [ ] Implementar carga/descarga de archivos para imágenes/documentos de productos
@@ -482,7 +467,7 @@ Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ## 👨‍💻 Autor
 
-**Fadi Daniel**
+**Fadi**
 - GitHub: [@FadiDaniel](https://github.com/FadiDaniel)
 
 ---
